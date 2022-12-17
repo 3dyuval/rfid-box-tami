@@ -10,12 +10,15 @@
 //posts(x=100, y=50, z=50, h=25, r=10, center=true);
 
 
-module posts (x,y,z,h,r, center=false) {
+module posts (x,y,z = 0,h,r, center=false) {
 
-	a = center ? [-x, y, z] : [-x+r, y-r ,z];
-	b = center ?  [x, y, z] : [x-r, y-r ,z];
-	c = center ? [x, -y, z] : [x-r, -y+r, z];
-	d = center ? [-x, -y, z] :  [-x+r, -y+r , z];
+	xd = x / 2;
+	yd = y / 2;
+
+	a = center ? [-xd, yd, z ] : [-xd+r,  yd-r ,z ];
+	b = center ? [ xd, yd, z ] : [ xd-r,  yd-r ,z ];
+	c = center ? [ xd,-yd, z ] : [ xd-r, -yd+r, z ];
+	d = center ? [-xd,-yd, z ] : [-xd+r, -yd+r ,z ];
 	
 			translate(a)
 			cylinder(h=h,r=r);
@@ -26,4 +29,3 @@ module posts (x,y,z,h,r, center=false) {
 			translate(d)
 			cylinder(h=h,r=r);
 }
-

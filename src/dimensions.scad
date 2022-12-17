@@ -1,6 +1,6 @@
 keypad_x = 69.2;
 keypad_y = 76.9;
-keypad_z = 2;
+keypad_z = 1;
 keypad_radius = 10;
 
 lcd_holes_x = 75;
@@ -19,7 +19,7 @@ box_z =  50;
 wall_thickness = 5;
 radius = 7.5;
 
-lid_thickness = 5;
+lid_thickness = 4;
 lid_lip = 3;
 
 lid_bottom = box_z - lid_thickness;
