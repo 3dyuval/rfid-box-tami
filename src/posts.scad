@@ -12,10 +12,10 @@
 
 module posts (x,y,z,h,r, center=false) {
 
-	a = center ? [x, -y, z] : [x-r, -y+r, z];
-	b = center ? [-x, -y, z] :  [-x+r, -y+r , z];
-	c = center ? [-x, y, z] : [-x+r, y-r ,z];
-	d = center ?  [x, y, z] : [x-r, y-r ,z];
+	a = center ? [-x, y, z] : [-x+r, y-r ,z];
+	b = center ?  [x, y, z] : [x-r, y-r ,z];
+	c = center ? [x, -y, z] : [x-r, -y+r, z];
+	d = center ? [-x, -y, z] :  [-x+r, -y+r , z];
 	
 			translate(a)
 			cylinder(h=h,r=r);

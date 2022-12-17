@@ -52,4 +52,4 @@ module lcd_mount() {
         }
   }
 
-  lcd_mount();
+  *lcd_mount();

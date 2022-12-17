@@ -14,12 +14,9 @@ module postsHoles () {
 }
 
 
-module box (x,y,z,h,r) {
-	hull()  posts(x,y,z,h,r);
-}
-
 module boxLid () {
-	box(
+	hull()
+	posts(
 			x=(box_x /2) -radius - lid_lip,
 			y=(box_y /2) -radius - lid_lip,
 			z= lid_bottom,
@@ -30,9 +27,8 @@ module boxLid () {
 
 
 //box
-union () {
+*union () {
 
-//posts
 		posts(
 			x=(box_x /2) -radius ,
 			y=(box_y /2) -radius ,
@@ -42,7 +38,8 @@ union () {
 		);
 	
 	difference(){	
-		box(
+		hull()
+		posts(
 			x=(box_x /2) -radius,
 			y=(box_y /2) -radius, 
 			z=0,
@@ -50,7 +47,8 @@ union () {
 			r=radius
 			);
 
-		box(
+		hull()
+		posts(
 			x=(box_x /2)-radius - wall_thickness,
 			y=(box_y /2 )-radius - wall_thickness, 
 			z=wall_thickness,
@@ -81,44 +79,78 @@ union () {
 //    < keypad  >
 
 // lid
-* union() {
+	
+	lcd_origin  = [0, lcd_y + space / 2, lid_bottom ];
+
+ union() {
         difference() {
             boxLid();
             postsHoles();
-			rotate(90)
+
+			//lcd cut
+			translate(lcd_origin)
+			cube([lcd_x,lcd_y,15], center=true);
 
             //keypad cut
-            translate([-space + 5, 0, 0])
-            box(
+            translate([0, -keypad_y/2 + space , 0])
+            hull()
+			posts(
                 x = keypad_x / 2,
                 y = keypad_y / 2,
                 z = lid_bottom + lid_thickness - keypad_z + 0.1,
                 r = keypad_radius,
                 h= keypad_z
             );
+
+			
             //keypad cable cut
-            translate([-keypad_x,0,lid_bottom])
-            cube([3,15,15], center=true);
+            translate([-keypad_x+10,0,lid_bottom])
+            cube([3,22,15], center=true);
+			
         }
 
-        // posts for rfid interior mount
-            mount_posts_h = 6;
-            translate([-(keypad_x / 2), 0,lid_bottom - mount_posts_h])
+		 lcd_post_h = 4;
+
+		translate([0,0,-lcd_post_h])
+		translate(lcd_origin)
+		difference() {
+		posts(
+			x=lcd_holes_x /2 - 5,
+			y=lcd_holes_y/2 -5,
+			z=0,
+			h=lcd_post_h,
+			r=5,
+			center=true
+		);
+		translate([0,0,lcd_post_h]);
+			posts(
+			x=lcd_holes_x /2 - 5,
+			y=lcd_holes_y/2 - 5,
+			z=0,
+			h=lcd_post_h,
+			r=2.5,
+			center=true
+		);
+		}
+
+
+        rfid_post_h = 6;
+        translate([0, -(keypad_x / 2) +space,lid_bottom - rfid_post_h])
         difference() {
             posts(
                     x=(rfid_s / 2),
                     y=(rfid_s / 2),
                     z=0,
-                    h=mount_posts_h,
-                    r=mount_posts_h
+                    h=rfid_post_h,
+                    r=rfid_post_h
             );
             posts(
                     x=(rfid_s / 2),
                     y=(rfid_s / 2),
                     z=0,
-                    h=mount_posts_h,
+                    h=rfid_post_h,
                     r=3
-
             );
         }
+
     }
