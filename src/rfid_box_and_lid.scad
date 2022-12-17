@@ -40,8 +40,6 @@ union () {
 			h=lid_bottom,
 			r=radius
 		);
-        	
-
 	
 	difference(){	
 		box(
